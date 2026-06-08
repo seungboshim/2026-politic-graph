@@ -19,7 +19,7 @@ export const POLITICIANS: Politician[] = [
   { id: 'kim-jy', name: '김재연', party: '진보당', vector: { axes: { econ: -80, social: -45, security: -75, trust: -45, gender: -45, engage: E }, impeach: 'pro', fraud: 0, leejm: 50, prosec: 85 } },
   { id: 'jang-hy', name: '장혜영', party: '전 정의당', vector: { axes: { econ: -65, social: -80, security: -40, trust: -15, gender: -85, engage: E }, impeach: 'pro', fraud: 0, leejm: 70, prosec: 60 } },
   // ─ 제3지대·중도
-  { id: 'lee-js', name: '이준석', party: '개혁신당', vector: { axes: { econ: 60, social: 10, security: 45, trust: 25, gender: 75, engage: E }, impeach: 'pro', fraud: 5, leejm: 95, prosec: 20 } },
+  { id: 'lee-js', name: '이준석', party: '개혁신당', vector: { axes: { econ: 60, social: 10, security: 45, trust: 45, gender: 75, engage: E }, impeach: 'pro', fraud: 5, leejm: 95, prosec: 20 } },
   { id: 'chun-hr', name: '천하람', party: '개혁신당', vector: { axes: { econ: 50, social: -5, security: 35, trust: 30, gender: 60, engage: E }, impeach: 'pro', fraud: 5, leejm: 90, prosec: 25 } },
   { id: 'ahn-cs', name: '안철수', party: '국민의힘', vector: { axes: { econ: 35, social: 5, security: 40, trust: 55, gender: 10, engage: E }, impeach: 'pro', fraud: 5, leejm: 85, prosec: 25 } },
   { id: 'oh-sh', name: '오세훈', party: '국민의힘', vector: { axes: { econ: 45, social: 25, security: 50, trust: 50, gender: 20, engage: E }, impeach: 'pro', fraud: 5, leejm: 90, prosec: 15 } },
