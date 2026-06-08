@@ -2,6 +2,7 @@
 import { describe, expect, test } from 'vitest';
 import { TYPES } from '@/data/types';
 import { AXES } from '@/data/schema';
+import { POLITICIANS } from '@/data/politicians';
 
 describe('TYPES 데이터 검증', () => {
   test('13개 유형, id 유일', () => {
@@ -33,6 +34,34 @@ describe('TYPES 데이터 검증', () => {
       expect(t.name.length).toBeGreaterThan(0);
       expect(t.tagline.length).toBeGreaterThan(0);
       expect(t.description.length).toBeGreaterThan(20);
+    }
+  });
+});
+
+describe('POLITICIANS 데이터 검증', () => {
+  test('25명, id 유일', () => {
+    expect(POLITICIANS.length).toBe(25);
+    expect(new Set(POLITICIANS.map((p) => p.id)).size).toBe(25);
+  });
+
+  test('정치인은 모든 스탠스를 가진다', () => {
+    for (const p of POLITICIANS) {
+      expect(p.vector.impeach, p.id).toBeDefined();
+      expect(p.vector.fraud, p.id).toBeDefined();
+      expect(p.vector.leejm, p.id).toBeDefined();
+      expect(p.vector.prosec, p.id).toBeDefined();
+    }
+  });
+
+  test('축·스탠스 값 범위', () => {
+    for (const p of POLITICIANS) {
+      for (const a of AXES) {
+        expect(Math.abs(p.vector.axes[a]), `${p.id}.${a}`).toBeLessThanOrEqual(100);
+      }
+      for (const k of ['fraud', 'leejm', 'prosec'] as const) {
+        expect(p.vector[k]!).toBeGreaterThanOrEqual(0);
+        expect(p.vector[k]!).toBeLessThanOrEqual(100);
+      }
     }
   });
 });
