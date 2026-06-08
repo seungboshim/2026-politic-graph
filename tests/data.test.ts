@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { TYPES } from '@/data/types';
 import { AXES } from '@/data/schema';
 import { POLITICIANS } from '@/data/politicians';
+import { ALL_QUESTIONS, PHASE1, PHASE3_POOL } from '@/data/questions';
 
 describe('TYPES 데이터 검증', () => {
   test('13개 유형, id 유일', () => {
@@ -63,5 +64,32 @@ describe('POLITICIANS 데이터 검증', () => {
         expect(p.vector[k]!).toBeLessThanOrEqual(100);
       }
     }
+  });
+});
+
+describe('QUESTIONS 데이터 검증', () => {
+  test('id 유일', () => {
+    expect(new Set(ALL_QUESTIONS.map((q) => q.id)).size).toBe(ALL_QUESTIONS.length);
+  });
+
+  test('Phase1은 9문항, 라우터 질문 포함', () => {
+    expect(PHASE1.length).toBe(9);
+    expect(PHASE1.some((q) => q.options.some((o) => o.routeBonus !== undefined))).toBe(true);
+  });
+
+  test('모든 선택지는 2개 이상, 델타 절대값 ≤ 60', () => {
+    for (const q of ALL_QUESTIONS) {
+      expect(q.options.length, q.id).toBeGreaterThanOrEqual(2);
+      for (const o of q.options) {
+        for (const v of Object.values(o.axes ?? {})) expect(Math.abs(v as number), q.id).toBeLessThanOrEqual(60);
+        for (const k of ['fraud', 'leejm', 'prosec'] as const) {
+          if (o[k] !== undefined) expect(Math.abs(o[k]!), q.id).toBeLessThanOrEqual(60);
+        }
+      }
+    }
+  });
+
+  test('Phase3 풀은 전부 target 축을 가진다', () => {
+    for (const q of PHASE3_POOL) expect(q.target, q.id).toBeDefined();
   });
 });
