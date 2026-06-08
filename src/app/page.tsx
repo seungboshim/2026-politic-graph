@@ -18,7 +18,7 @@ export default async function Home() {
   const count = await participantCount();
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
-      <p className="text-sm font-medium text-zinc-500">17문항 · 3분</p>
+      <p className="text-sm font-medium text-zinc-500">18문항 내외 · 3분</p>
       <h1 className="mt-3 max-w-xl text-4xl font-extrabold leading-tight">
         나의 정치 유형,<br />그리고 나와 가장 가까운 정치인은?
       </h1>

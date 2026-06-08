@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = r ? TYPE_MAP[r.typeId]?.name : undefined;
   return {
     title: name ? `나는 "${name}" | 정치성향 테스트` : '정치성향 테스트',
-    description: '17문항으로 알아보는 나의 정치 유형과 가장 가까운 정치인',
+    description: '18문항 내외로 알아보는 나의 정치 유형과 가장 가까운 정치인',
   };
 }
 
