@@ -97,9 +97,16 @@
 | `body01` | 0.9375rem(15px) | Light | -0.02em | 질문문·태그라인 |
 | `body02` | 0.8125rem(13px) | Light | -0.02em | 본문·설명·댓글 |
 | `label01` | 0.6875rem(11px) | Light | -0.02em (foreground-subtle) | 메타(정당·시간) |
-| `label02` | 0.625rem(10px) | Bold | +0.05em·uppercase | 라벨(진영·섹션캡) |
+| `label02` | 0.6875rem(11px) | Light·mono | -0.01em | 터미널 라벨(진영·섹션 eyebrow) — 아래 프리픽스 규칙 |
 
 - 그라디언트 텍스트(유형명·유사도 %)는 §액센트의 **밝은 텍스트 스펙트럼**(`spectrum-*-text`)을 `lean`에 맞춰 `bg-clip-text`로 적용.
+
+### 작은 라벨 = 터미널 프리픽스 (대문자·자간 eyebrow 금지)
+"대문자 + 자간 벌림" eyebrow는 **쓰지 않는다**(범용 템플릿 느낌). 대신 모노 기호 프리픽스로 터미널 정체성을 살린다:
+- **진영 eyebrow**: `// {진영}` — 모노, `label02`, `foreground-subtle`. `//`만 `spectrum-*-text`(밝은 액센트).  예) `// 중도좌`
+- **섹션 타이틀**: `> {제목}` — `heading02`(Bold). 선행 `>`는 모노·`font-normal`·`spectrum-*-text`, 본문은 일반 자간. 예) `> 나와 가장 가까운 정치인`
+- **메타 라인**(결과 ID·상단바): 모노 소문자, dim. 예) `result · a3f9` (대문자/자간 금지)
+- 어떤 라벨에도 `text-transform: uppercase`·양수 letter-spacing를 쓰지 않는다.
 
 ### 기타
 - radius: 카드·버튼 ~10–12px, 칩 ~5–6px (Tailwind `rounded-xl`/`rounded-md`).
@@ -115,11 +122,11 @@
 - **`<Chip>`** (유형 키워드 #해시태그) / **`<Tag>`** (정치인 태그) — 시각적으로 구분되는 두 종류.
 - **`<ProgressBar>`** — 스펙트럼 그라디언트 fill. 유사도와 진행률에 공용.
 - **`<PoliticianNameBadge>`** — 아바타 우측하단에 겹치는 정당색 테두리 칩(정치인 이름).
-- **`<Card>`** / **`<SectionHeading>`** — 섹션 컨테이너 + 소제목 라벨.
+- **`<Card>`** / **`<SectionHeading>`** — 섹션 컨테이너 + 소제목. SectionHeading은 `> {제목}` 터미널 프리픽스 형식(§작은 라벨 규칙).
 - **`<Alert>`** — 우아한 강등/오류 안내 배너.
 
 ### 조합
-- **`<TypeResultCard>`** — 진영 라벨 → 그라디언트 유형명 → 태그라인 → 설명 → 키워드 Chip[] → "N%가 같은 유형" 통계.
+- **`<TypeResultCard>`** — 진영 eyebrow(`// {진영}` 터미널 프리픽스) → 그라디언트 유형명 → 태그라인 → 설명 → 키워드 Chip[] → "N%가 같은 유형" 통계.
 - **`<PoliticianMatchRow>`** = PixelAvatar + 이름/정당 + 유사도% + Tag[] + ProgressBar. (※ 기존 "태깅 근거(evidence)" 표시는 제거. 대신 정치인 `tags` 노출 — 데이터에 `tags: string[]` 추가 필요)
 - **`<RadarChart>`** — 6축(시장/전통/안보/신뢰/반페미/관여) SVG, 다크+스펙트럼 그라디언트 채움.
 - **테스트 진행** — `<QuestionProgress>`(Q번호+%+바) · `<QuestionPrompt>`(질문문) · `<OptionButton>`(선택지) · 뒤로 `<Button ghost>`.
