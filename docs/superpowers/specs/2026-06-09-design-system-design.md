@@ -16,28 +16,68 @@
 
 모든 컴포넌트는 raw hex가 아니라 시맨틱 토큰만 참조한다. 룩 변경 = 토큰 값만 교체.
 
-### 색 (시맨틱)
-| 토큰 | 잠정값 | 용도 |
-|---|---|---|
-| `--bg` | #06090f | 페이지 배경 |
-| `--surface` | #0a0e14 | 카드 |
-| `--raised` | #11161d | 입력·칩·옵션 |
-| `--border` / `--border2` | #1c2430 / #283041 | 구분선 / 강조 테두리 |
-| `--text` / `--text2` / `--muted` / `--faint` | #e8edf5 / #aeb6c4 / #5b6577 / #46505f | 본문 위계 |
-| `--accent1` / `--accent2` / `--accent3` | #4cc9f0 / #f72585 / #b388ff | 시안·마젠타·바이올렛 (그라디언트·글로우) |
-| `--ok` / `--warn` / `--danger` | #3ddc97 / #e6c463 / #e8434b | 상태 |
+**확정 규칙**: 비-정당색은 전부 **Tailwind 기본 팔레트**(neutral 베이스 + 액센트)에 매핑하고 raw hex를 쓰지 않는다. 시맨틱 토큰명은 **foreground / background / surface** 계열. Tailwind v4 `@theme inline`의 `--color-*` 네임스페이스로 정의해 `bg-surface` / `text-foreground` 등 유틸리티를 생성한다.
 
-### 정당색 (`PARTY_COLORS`, 데이터 토큰)
-더불어민주당 #2f86e0 · 국민의힘 #e8434b · 개혁신당 #ff8a2a · 조국혁신당 #2bb3e0 · 진보당/민주노동당 #e0294f · 새로운미래 #13c2b0 · 자유통일당 #c41f33 · 무소속 #98a1ad. 넥타이·정치인 뱃지·유사도 바 톤에 사용. 정당 추가/변경은 이 맵만 수정.
+### 색 — 시맨틱 토큰 (다크 전용, Tailwind 매핑 확정)
+| 토큰 (`--color-*`) | Tailwind | hex | 용도 |
+|---|---|---|---|
+| `background` | neutral-950 | #0a0a0a | 페이지 배경 |
+| `surface` | neutral-900 | #171717 | 카드 |
+| `surface-raised` | neutral-800 | #262626 | 입력·칩·옵션 |
+| `border` | neutral-800 | #262626 | 구분선 |
+| `border-strong` | neutral-700 | #404040 | 강조 테두리 |
+| `foreground` | neutral-100 | #f5f5f5 | 본문 1차 |
+| `foreground-secondary` | neutral-400 | #a3a3a3 | 본문 2차 |
+| `foreground-subtle` | neutral-500 | #737373 | 메타 |
+| `foreground-faint` | neutral-600 | #525252 | 가장 흐림 |
+| `brand` | cyan-400 | #22d3ee | 네온 액센트1 |
+| `brand-2` | fuchsia-500 | #d946ef | 네온 액센트2 |
+| `brand-3` | violet-400 | #a78bfa | 그라디언트 중간 |
+| `success` | emerald-400 | #34d399 | 상태 |
+| `warning` | amber-300 | #fcd34d | 상태 |
+| `danger` | red-500 | #ef4444 | 상태 |
 
-### 타이포그래피
-- 기본: 모노스페이스 스택 (`ui-monospace, SFMono-Regular, Menlo, monospace`). 픽셀 비트맵 폰트(예: DungGeunMo/Galmuri) 도입은 후속 옵션 — 토큰(`--font-display`)으로 분리해 둔다.
-- 스케일: display(28~34px/800, 그라디언트 텍스트) · h2(13px/700) · body(13px) · small(11px) · label(10px, uppercase, letter-spacing).
+> 네이밍 충돌 주의: `background`/`surface`는 `bg-background`/`bg-surface`로 안전. (`color-bg` 같은 접두사 중복 회피.)
+
+### 정당색 — 공식 메인컬러 (`PARTY_COLORS` TS 맵, ⚠ 값 검증 필요)
+정당명 → 공식 hex. 넥타이·정치인 뱃지·유사도 바 톤에 사용. 정치인 데이터가 정당 문자열로 참조하므로 CSS 토큰이 아닌 **TS 상수 맵**으로 둔다(정당 추가/변경은 이 맵만 수정).
+
+| 정당 | hex (잠정·확정 전 검증) |
+|---|---|
+| 더불어민주당 | #0050A0 |
+| 국민의힘 | #E61E2B |
+| 개혁신당 | #FF7210 |
+| 조국혁신당 | #0F4C99 |
+| 진보당 / 민주노동당 | #D6001C |
+| 새로운미래 | #00A19C |
+| 정의당계(녹색정의당) | #FFED00 |
+| 자유통일당 | #B01F24 |
+| 무소속 | neutral-500 #737373 |
+
+> 이 hex들은 추정값이다. 구현 전 각 정당 공식 CI/브랜드 가이드로 확정한다(오너 확인 또는 공식 자료 검증).
+
+### 타이포그래피 — BookkGothic (Light 400 / Bold 700), 넘버링 토큰
+- **폰트**: BookkGothic 단일 패밀리. `public/fonts/`에 `BookkGothic_Light.ttf`(400) · `BookkGothic_Bold.ttf`(700) 복사 후 `globals.css`에서 `@font-face` 2개 정의. `--font-sans`(=`--color`와 동급의 `--font-*` 네임스페이스)에 `'BookkGothic', ui-monospace, system-ui, sans-serif` 폴백 스택.
+- **2 weight 제약**: 사용 가능한 굵기는 `font-normal`(400=Light)·`font-bold`(700=Bold)뿐. 500/600 등 중간 굵기는 합성(가짜 볼드)되므로 금지. 위계는 **크기 + L/B + 색 + 자간**으로 만든다.
+- **스케일** (`--text-*` 네임스페이스, 01=가장 큼):
+
+| 토큰 (`text-*`) | size | weight | 비고 | 용도 |
+|---|---|---|---|---|
+| `display01` | 2rem(32px) | Bold | tracking -0.5 | 결과 유형명(히어로) |
+| `display02` | 1.5rem(24px) | Bold | tracking -0.3 | 랜딩 헤드라인 |
+| `heading01` | 1rem(16px) | Bold | | 큰 섹션 제목 |
+| `heading02` | 0.8125rem(13px) | Bold | | 카드 섹션 제목 |
+| `body01` | 0.9375rem(15px) | Light | | 질문문·태그라인 |
+| `body02` | 0.8125rem(13px) | Light | | 본문·설명·댓글 |
+| `label01` | 0.6875rem(11px) | Light | foreground-subtle | 메타(정당·시간) |
+| `label02` | 0.625rem(10px) | Bold | uppercase·tracking +1.5 | 라벨(진영·섹션캡) |
+
+- 그라디언트 텍스트(유형명)는 `brand→brand-3→brand-2` 선형 그라디언트 + `bg-clip-text`. (잠정 — 아트디렉션 튜닝 대상)
 
 ### 기타
-- radius: `--r` 10–12px(카드·버튼), `--rs` 5–6px(칩). 
-- 글로우: 액센트 요소에 `box-shadow`/`drop-shadow` 네온 (토큰화).
-- 간격: 4px 베이스 스케일.
+- radius: 카드·버튼 ~10–12px, 칩 ~5–6px (Tailwind `rounded-xl`/`rounded-md`).
+- 글로우: 액센트 요소에 네온 `shadow`/`drop-shadow`. (잠정)
+- 간격: Tailwind 기본 4px 스케일.
 - 픽셀 렌더링: 아바타 SVG는 `image-rendering: pixelated` + 정수배 표시.
 
 ## 2. 컴포넌트 인벤토리 (구조 확정)
