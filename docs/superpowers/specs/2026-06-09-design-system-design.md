@@ -8,7 +8,7 @@
 ## 0. 핵심 원칙
 
 - **다크 전용.** 라이트모드 제거.
-- **비주얼 토큰은 잠정(교체 가능), 컴포넌트 구조는 확정.** 현재 "네온 하이브리드" 룩은 만족 단계가 아니며, **시맨틱 토큰 한 겹**을 거쳐 색·폰트·글로우를 나중에 통째로 바꿀 수 있게 한다. 컴포넌트의 책임·조합(레이아웃)은 이 스펙에서 고정한다.
+- **비주얼 토큰은 잠정(교체 가능), 컴포넌트 구조는 확정.** 현재 룩(다크 + 픽셀 + 좌우 스펙트럼 액센트)은 미적 완성 단계가 아니며, **시맨틱 토큰 한 겹**을 거쳐 색·폰트·글로우를 나중에 통째로 바꿀 수 있게 한다. 컴포넌트의 책임·조합(레이아웃)은 이 스펙에서 고정한다.
 - **픽셀/터미널 정체성 유지.** 모노스페이스 기반, 픽셀 도트 아바타, 정당색 액센트.
 - 기존 MVP(`master`)의 페이지·서버액션 구조 위에 **스타일 레이어와 컴포넌트만 교체**한다. 채점·엔진·DB 로직은 건드리지 않는다.
 
@@ -30,14 +30,37 @@
 | `foreground-secondary` | neutral-400 | #a3a3a3 | 본문 2차 |
 | `foreground-subtle` | neutral-500 | #737373 | 메타 |
 | `foreground-faint` | neutral-600 | #525252 | 가장 흐림 |
-| `brand` | cyan-400 | #22d3ee | 네온 액센트1 |
-| `brand-2` | fuchsia-500 | #d946ef | 네온 액센트2 |
-| `brand-3` | violet-400 | #a78bfa | 그라디언트 중간 |
 | `success` | emerald-400 | #34d399 | 상태 |
 | `warning` | amber-300 | #fcd34d | 상태 |
 | `danger` | red-500 | #ef4444 | 상태 |
 
 > 네이밍 충돌 주의: `background`/`surface`는 `bg-background`/`bg-surface`로 안전. (`color-bg` 같은 접두사 중복 회피.)
+> 액센트는 네온(cyan/fuchsia)을 **폐기**하고 아래 좌우 스펙트럼으로 대체한다.
+
+### 액센트 — 좌우 정치 스펙트럼 (네온 폐기, 확정)
+브랜드 액센트 = **좌(민주 블루) ↔ 우(국힘 레드)** 정치 축. 임의 네온 대신 이 스펙트럼을 유형명·유사도 바·레이더·CTA에 쓴다. (정당 브랜드색이 좌우와 일치하는 건 민주·국힘뿐이라, 스펙트럼은 "좌=파랑/우=빨강" 추상 축으로만 쓰고 **넥타이·뱃지는 §정당색을 그대로 유지**한다.)
+
+**적응형(확정)**: 결과의 좌우 위치 `lean = (econ + social + security)/3` 에 따라 액센트 그라디언트가 달라진다 — 좌향은 파랑, 우향은 빨강, 중도는 보라. "내 결과가 내 정치색으로 칠해진다."
+
+| lean | 그라디언트(좌→우 stop) |
+|---|---|
+| ≤ −30 (좌) | `spectrum-blue → spectrum-violet` |
+| −30 ~ +30 (중도) | `spectrum-blue-mid → spectrum-violet-mid` (보라 계열) |
+| ≥ +30 (우) | `spectrum-violet → spectrum-red` |
+
+**두 단(tier) — 채움은 진하게, 텍스트는 밝게** (다크 배경 시인성):
+
+| 역할 | 토큰 | hex | 용도 |
+|---|---|---|---|
+| 채움 | `spectrum-blue` | #2f6fe6 | 바·레이더 fill 좌극 |
+| 채움 | `spectrum-violet` | #8b5cf6 | 중간 |
+| 채움 | `spectrum-red` | #e8434b | 바·레이더 fill 우극 |
+| 텍스트 | `spectrum-blue-text` | #6aa3ff | 그라디언트 텍스트(유형명·%) 좌극 |
+| 텍스트 | `spectrum-violet-text` | #b794f6 | 중간 |
+| 텍스트 | `spectrum-red-text` | #ff7b82 | 그라디언트 텍스트 우극 |
+
+- **규칙**: 텍스트(유형명·유사도 %·액센트 카피)는 `*-text`(밝은) 톤만 사용. 바·레이더 등 면 채움은 진한 톤 사용. 대형 볼드 텍스트 기준 대비 ≥3:1 확보.
+- 토큰은 `--color-spectrum-*`로 정의. 적응형 그라디언트는 런타임에 `lean`으로 stop을 고르는 헬퍼(`accentGradient(lean, 'fill'|'text')`)로 생성.
 
 ### 정당색 — 공식 메인컬러 (`PARTY_COLORS` TS 맵, ⚠ 값 검증 필요)
 정당명 → 공식 hex. 넥타이·정치인 뱃지·유사도 바 톤에 사용. 정치인 데이터가 정당 문자열로 참조하므로 CSS 토큰이 아닌 **TS 상수 맵**으로 둔다(정당 추가/변경은 이 맵만 수정).
@@ -63,22 +86,24 @@
 - **2 weight 제약**: 사용 가능한 굵기는 `font-normal`(400=Light)·`font-bold`(700=Bold)뿐. 500/600 등 중간 굵기는 합성(가짜 볼드)되므로 금지. 위계는 **크기 + L/B + 색 + 자간**으로 만든다.
 - **스케일** (`--text-*` 네임스페이스, 01=가장 큼):
 
-| 토큰 (`text-*`) | size | weight | 비고 | 용도 |
-|---|---|---|---|---|
-| `display01` | 2rem(32px) | Bold | tracking -0.5 | 결과 유형명(히어로) |
-| `display02` | 1.5rem(24px) | Bold | tracking -0.3 | 랜딩 헤드라인 |
-| `heading01` | 1rem(16px) | Bold | | 큰 섹션 제목 |
-| `heading02` | 0.8125rem(13px) | Bold | | 카드 섹션 제목 |
-| `body01` | 0.9375rem(15px) | Light | | 질문문·태그라인 |
-| `body02` | 0.8125rem(13px) | Light | | 본문·설명·댓글 |
-| `label01` | 0.6875rem(11px) | Light | foreground-subtle | 메타(정당·시간) |
-| `label02` | 0.625rem(10px) | Bold | uppercase·tracking +1.5 | 라벨(진영·섹션캡) |
+**자간 확정**: 전체적으로 좁힌다. 기본 `letter-spacing: -0.02em`, display는 -0.03em. 대문자 라벨(label02)만 가독성 위해 +0.05em.
 
-- 그라디언트 텍스트(유형명)는 `brand→brand-3→brand-2` 선형 그라디언트 + `bg-clip-text`. (잠정 — 아트디렉션 튜닝 대상)
+| 토큰 (`text-*`) | size | weight | tracking | 용도 |
+|---|---|---|---|---|
+| `display01` | 2rem(32px) | Bold | -0.03em | 결과 유형명(히어로) |
+| `display02` | 1.5rem(24px) | Bold | -0.03em | 랜딩 헤드라인 |
+| `heading01` | 1rem(16px) | Bold | -0.02em | 큰 섹션 제목 |
+| `heading02` | 0.8125rem(13px) | Bold | -0.02em | 카드 섹션 제목 |
+| `body01` | 0.9375rem(15px) | Light | -0.02em | 질문문·태그라인 |
+| `body02` | 0.8125rem(13px) | Light | -0.02em | 본문·설명·댓글 |
+| `label01` | 0.6875rem(11px) | Light | -0.02em (foreground-subtle) | 메타(정당·시간) |
+| `label02` | 0.625rem(10px) | Bold | +0.05em·uppercase | 라벨(진영·섹션캡) |
+
+- 그라디언트 텍스트(유형명·유사도 %)는 §액센트의 **밝은 텍스트 스펙트럼**(`spectrum-*-text`)을 `lean`에 맞춰 `bg-clip-text`로 적용.
 
 ### 기타
 - radius: 카드·버튼 ~10–12px, 칩 ~5–6px (Tailwind `rounded-xl`/`rounded-md`).
-- 글로우: 액센트 요소에 네온 `shadow`/`drop-shadow`. (잠정)
+- 글로우: 액센트 요소에 스펙트럼색 `shadow`/`drop-shadow`. (잠정)
 - 간격: Tailwind 기본 4px 스케일.
 - 픽셀 렌더링: 아바타 SVG는 `image-rendering: pixelated` + 정수배 표시.
 
@@ -86,9 +111,9 @@
 
 ### 프리미티브
 - **`<PixelAvatar>`** — props `{ sex:'m'|'f', hair:'up'|'down'|'bob', hairColor:'black'|'silver', glasses:boolean, party:string, size:number }`. 20px 그리드 SVG를 코드 생성(에셋 없음), 흰색 1px 실루엣 아웃라인(feMorphology). 무안경=세로 눈(1×2, 중앙), 안경=검은 사각테+1×1 눈. 여성 긴머리는 목뒤·어깨까지 채움. 넥타이=정당색. 사이즈 가변(24~96px).
-- **`<Button>`** — variant: `primary`(네온 그라디언트), `secondary`(아웃라인), `ghost`(텍스트).
+- **`<Button>`** — variant: `primary`(스펙트럼 그라디언트), `secondary`(아웃라인), `ghost`(텍스트).
 - **`<Chip>`** (유형 키워드 #해시태그) / **`<Tag>`** (정치인 태그) — 시각적으로 구분되는 두 종류.
-- **`<ProgressBar>`** — 네온 그라디언트 fill. 유사도와 진행률에 공용.
+- **`<ProgressBar>`** — 스펙트럼 그라디언트 fill. 유사도와 진행률에 공용.
 - **`<PoliticianNameBadge>`** — 아바타 우측하단에 겹치는 정당색 테두리 칩(정치인 이름).
 - **`<Card>`** / **`<SectionHeading>`** — 섹션 컨테이너 + 소제목 라벨.
 - **`<Alert>`** — 우아한 강등/오류 안내 배너.
@@ -96,7 +121,7 @@
 ### 조합
 - **`<TypeResultCard>`** — 진영 라벨 → 그라디언트 유형명 → 태그라인 → 설명 → 키워드 Chip[] → "N%가 같은 유형" 통계.
 - **`<PoliticianMatchRow>`** = PixelAvatar + 이름/정당 + 유사도% + Tag[] + ProgressBar. (※ 기존 "태깅 근거(evidence)" 표시는 제거. 대신 정치인 `tags` 노출 — 데이터에 `tags: string[]` 추가 필요)
-- **`<RadarChart>`** — 6축(시장/전통/안보/신뢰/반페미/관여) SVG, 다크+네온 그라디언트 채움.
+- **`<RadarChart>`** — 6축(시장/전통/안보/신뢰/반페미/관여) SVG, 다크+스펙트럼 그라디언트 채움.
 - **테스트 진행** — `<QuestionProgress>`(Q번호+%+바) · `<QuestionPrompt>`(질문문) · `<OptionButton>`(선택지) · 뒤로 `<Button ghost>`.
 - **댓글** — `<CommentComposer>`(자동 랜덤닉 표시 + 본문 textarea + 등록) · `<CommentItem>`(좌: Avatar+NameBadge / 우: 랜덤닉+시간+본문+삭제·신고).
 - **통계** — `<StatBar>`(유형 분포 라벨드 바) · `<RankRow>`(정치인 1위 매칭 랭킹).
