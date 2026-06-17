@@ -4,12 +4,23 @@
 import { useEffect, useState } from 'react';
 import { addComment, deleteComment, listComments, reportComment, type CommentView } from '@/app/actions';
 
+function getOrCreateOwnerToken(): string {
+  try {
+    let token = localStorage.getItem('pg_owner_token');
+    if (!token || token.length < 6) {
+      token = crypto.randomUUID().replace(/-/g, '');
+      localStorage.setItem('pg_owner_token', token);
+    }
+    return token;
+  } catch {
+    return '';
+  }
+}
+
 export default function Comments({ resultId }: { resultId: string }) {
   const [items, setItems] = useState<CommentView[]>([]);
   const [canWrite, setCanWrite] = useState(false);
   const [myResultId, setMyResultId] = useState<string | null>(null);
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
   const [body, setBody] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -25,9 +36,11 @@ export default function Comments({ resultId }: { resultId: string }) {
 
   async function submit() {
     if (!myResultId) return;
+    const ownerToken = getOrCreateOwnerToken();
+    if (!ownerToken) return;
     setBusy(true);
     setError('');
-    const res = await addComment({ resultId: myResultId, nickname, password, body });
+    const res = await addComment({ resultId: myResultId, ownerToken, body });
     setBusy(false);
     if (!res.ok) { setError(res.error ?? '실패'); return; }
     setBody('');
@@ -35,9 +48,9 @@ export default function Comments({ resultId }: { resultId: string }) {
   }
 
   async function remove(id: string) {
-    const pw = prompt('댓글 비밀번호를 입력하세요');
-    if (!pw) return;
-    const res = await deleteComment(id, pw);
+    const ownerToken = getOrCreateOwnerToken();
+    if (!ownerToken) return;
+    const res = await deleteComment(id, ownerToken);
     if (!res.ok) { alert(res.error); return; }
     setItems(await listComments());
   }
@@ -53,12 +66,6 @@ export default function Comments({ resultId }: { resultId: string }) {
 
       {canWrite ? (
         <div className="mb-6 rounded-xl border border-zinc-200 p-4">
-          <div className="mb-2 flex gap-2">
-            <input value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="닉네임"
-              maxLength={12} className="w-32 rounded-lg border border-zinc-200 px-3 py-2 text-sm" data-testid="comment-nickname" />
-            <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호"
-              type="password" className="w-32 rounded-lg border border-zinc-200 px-3 py-2 text-sm" data-testid="comment-password" />
-          </div>
           <textarea value={body} onChange={(e) => setBody(e.target.value)} placeholder="내 유형 뱃지를 달고 한마디"
             maxLength={500} rows={3} className="w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm" data-testid="comment-body" />
           {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
@@ -79,7 +86,7 @@ export default function Comments({ resultId }: { resultId: string }) {
             <div className="mb-1 flex items-center gap-2 text-sm">
               {c.badge && (
                 <span className="rounded-full bg-zinc-900 px-2.5 py-0.5 text-xs text-white">
-                  {c.badge.typeName} · {c.badge.politicianName} {c.badge.similarity}%
+                  {c.badge.party} · {c.badge.politicianName}
                 </span>
               )}
               <b>{c.nickname}</b>
