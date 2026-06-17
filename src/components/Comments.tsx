@@ -77,7 +77,7 @@ export default function Comments() {
 
       <ul className="flex flex-col">
         {items.map((c) => (
-          <li key={c.id} className="flex items-start gap-3.5 border-t border-[#161616] py-4">
+          <li key={c.id} className="flex items-start gap-3.5 border-t border-border py-4">
             <div className="relative h-12 w-12 flex-shrink-0">
               {c.badge && <>
                 <PixelAvatar {...c.badge.face} party={c.badge.party} size={48} />
