@@ -93,3 +93,21 @@ describe('QUESTIONS 데이터 검증', () => {
     for (const q of PHASE3_POOL) expect(q.target, q.id).toBeDefined();
   });
 });
+
+describe('디자인 시스템 스키마 검증', () => {
+  test('모든 유형은 nickLabel(1~8자, 공백 없음)을 가진다', () => {
+    for (const t of TYPES) {
+      expect(t.nickLabel, t.id).toBeTruthy();
+      expect(t.nickLabel.length).toBeLessThanOrEqual(8);
+      expect(t.nickLabel).not.toMatch(/\s/);
+    }
+  });
+  test('모든 정치인은 face를 가진다', () => {
+    for (const p of POLITICIANS) {
+      expect(['m', 'f']).toContain(p.face.sex);
+      expect(['up', 'down', 'bob']).toContain(p.face.hair);
+      expect(['black', 'silver']).toContain(p.face.hairColor);
+      expect(typeof p.face.glasses).toBe('boolean');
+    }
+  });
+});

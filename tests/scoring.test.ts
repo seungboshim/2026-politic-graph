@@ -87,8 +87,8 @@ describe('similarity / match', () => {
   });
 
   const types: PoliticalType[] = [
-    { id: 'a', name: 'A', camp: '좌파', tagline: '', description: '', keywords: [], vector: tv({ econ: -80 }) },
-    { id: 'b', name: 'B', camp: '우파', tagline: '', description: '', keywords: [], vector: tv({ econ: 80 }) },
+    { id: 'a', name: 'A', nickLabel: 'A', camp: '좌파', tagline: '', description: '', keywords: [], vector: tv({ econ: -80 }) },
+    { id: 'b', name: 'B', nickLabel: 'B', camp: '우파', tagline: '', description: '', keywords: [], vector: tv({ econ: 80 }) },
   ];
 
   test('matchType은 최근접 유형을 고른다', () => {
@@ -104,9 +104,10 @@ describe('similarity / match', () => {
     expect(matchType(s, types2).id).toBe('a');
   });
 
+  const testFace = { sex: 'm' as const, hair: 'up' as const, hairColor: 'black' as const, glasses: false };
   const pols: Politician[] = [
-    { id: 'p1', name: 'P1', party: 'X', vector: tv({ econ: -70, engage: 90 }, { fraud: 5, leejm: 20, prosec: 80, impeach: 'pro' }) },
-    { id: 'p2', name: 'P2', party: 'Y', vector: tv({ econ: 60, engage: 90 }, { fraud: 5, leejm: 95, prosec: 20, impeach: 'pro' }) },
+    { id: 'p1', name: 'P1', party: 'X', vector: tv({ econ: -70, engage: 90 }, { fraud: 5, leejm: 20, prosec: 80, impeach: 'pro' }), face: testFace },
+    { id: 'p2', name: 'P2', party: 'Y', vector: tv({ econ: 60, engage: 90 }, { fraud: 5, leejm: 95, prosec: 20, impeach: 'pro' }), face: testFace },
   ];
 
   test('matchPoliticians: 정렬 + engage 제외 + 유사도', () => {

@@ -39,14 +39,6 @@ export default function ResultView({
                 <span>
                   <b className="mr-2">{i + 1}위 {p.name}</b>
                   <span className="text-sm text-zinc-500">{p.party}</span>
-                  {p.evidence?.length ? (
-                    <details className="mt-1 text-xs text-zinc-500">
-                      <summary className="cursor-pointer">태깅 근거</summary>
-                      <ul className="mt-1 list-disc pl-4">
-                        {p.evidence.map((e, j) => <li key={j}>{e.tag}: {e.value} — {e.source}</li>)}
-                      </ul>
-                    </details>
-                  ) : null}
                 </span>
                 <b className="text-xl">{m.similarity}%</b>
               </li>
