@@ -31,7 +31,7 @@ export default async function ResultPage({ params }: Props) {
         <Link href="/test" className="rounded-xl border border-zinc-300 px-5 py-3 text-sm">나도 테스트하기</Link>
         <Link href="/stats" className="rounded-xl border border-zinc-300 px-5 py-3 text-sm">전체 통계 보기</Link>
       </div>
-      <Comments resultId={r.id} />
+      <Comments />
     </main>
   );
 }
