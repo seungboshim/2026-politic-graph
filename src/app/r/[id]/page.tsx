@@ -25,13 +25,13 @@ export default async function ResultPage({ params }: Props) {
   if (!r) notFound();
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-12">
+    <main className="mx-auto max-w-[560px] px-4 py-12">
       <ResultView typeId={r.typeId} state={r.state} top={r.top} samePct={r.samePct} />
       <div className="mt-10 flex justify-center gap-3">
-        <Link href="/test" className="rounded-xl border border-zinc-300 px-5 py-3 text-sm">나도 테스트하기</Link>
-        <Link href="/stats" className="rounded-xl border border-zinc-300 px-5 py-3 text-sm">전체 통계 보기</Link>
+        <Link href="/test" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">나도 테스트하기</Link>
+        <Link href="/stats" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">전체 통계 보기</Link>
       </div>
-      <Comments resultId={r.id} />
+      <Comments />
     </main>
   );
 }

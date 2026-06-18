@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "BookkGothic";
+  src: url("/fonts/BookkGothic_Light.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "BookkGothic";
+  src: url("/fonts/BookkGothic_Bold.ttf") format("truetype");
+  font-weight: 700; font-style: normal; font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-background: #0a0a0a;
+  --color-surface: #171717;
+  --color-surface-raised: #262626;
+  --color-border: #262626;
+  --color-border-strong: #404040;
+  --color-foreground: #f5f5f5;
+  --color-foreground-secondary: #a3a3a3;
+  --color-foreground-subtle: #737373;
+  --color-foreground-faint: #525252;
+  --color-success: #34d399;
+  --color-warning: #fcd34d;
+  --color-danger: #ef4444;
+
+  --color-spectrum-blue: #2f6fe6;
+  --color-spectrum-violet: #8b5cf6;
+  --color-spectrum-red: #e8434b;
+  --color-spectrum-blue-text: #6aa3ff;
+  --color-spectrum-violet-text: #b794f6;
+  --color-spectrum-red-text: #ff7b82;
+
+  --font-sans: "BookkGothic", ui-monospace, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-display01: 2rem;
+  --text-display02: 1.5rem;
+  --text-heading01: 1rem;
+  --text-heading02: 0.8125rem;
+  --text-body01: 0.9375rem;
+  --text-body02: 0.8125rem;
+  --text-label01: 0.6875rem;
+  --text-label02: 0.6875rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html { color-scheme: dark; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
 }
+svg.pg-pixel { image-rendering: pixelated; }

@@ -42,9 +42,17 @@ export interface TargetVector {
   prosec?: number;
 }
 
+export interface AvatarFace {
+  sex: 'm' | 'f';
+  hair: 'up' | 'down' | 'bob';
+  hairColor: 'black' | 'silver';
+  glasses: boolean;
+}
+
 export interface PoliticalType {
   id: string;
   name: string;
+  nickLabel: string;
   camp: '좌파' | '중도좌' | '중도우' | '우파' | '비이념';
   tagline: string;
   description: string;
@@ -53,19 +61,13 @@ export interface PoliticalType {
   weights?: Partial<Record<DimId, number>>; // 이 유형 판별 시 기본 가중치 덮어쓰기
 }
 
-export interface Evidence {
-  tag: DimId;
-  value: string;
-  source: string;
-  url?: string;
-}
-
 export interface Politician {
   id: string;
   name: string;
   party: string;
-  vector: TargetVector; // 정치인은 모든 스탠스 보유
-  evidence?: Evidence[];
+  vector: TargetVector;
+  face: AvatarFace;
+  tags?: string[];
 }
 
 export interface Answer {

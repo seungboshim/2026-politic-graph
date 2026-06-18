@@ -13,7 +13,7 @@ export const comments = pgTable('comments', {
   id: uuid('id').defaultRandom().primaryKey(),
   resultId: uuid('result_id').references(() => results.id).notNull(),
   nickname: text('nickname').notNull(),
-  passwordHash: text('password_hash').notNull(),
+  ownerHash: text('owner_hash').notNull(),
   body: text('body').notNull(),
   ipHash: text('ip_hash').notNull(),
   deleted: boolean('deleted').default(false).notNull(),
