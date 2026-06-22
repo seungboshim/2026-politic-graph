@@ -120,7 +120,7 @@ describe('페르소나 골든 테스트 (12유형)', () => {
       p1: 4, p2: 4, p3: 4, p4: 4, p5: 4, p6: 4,
     });
     expectType(r, 'plaza-right');
-    expect(['jeon-hg', 'jeon-kh']).toContain(r.top[0].politicianId);
+    expect(['jeon-hg', 'hwang-ka']).toContain(r.top[0].politicianId);
   });
 
   test('무당층 회의파 → cynic', () => {

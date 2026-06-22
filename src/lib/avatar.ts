@@ -30,20 +30,17 @@ export function avatarInnerSvg(o: AvatarOpts): string {
   if (o.hair === 'bob') {
     k += px(li, 2, fw + 2, 3, hb) + px(li - 1, 4, 2, 10, hb) + px(ri, 4, 2, 10, hb)
       + px(li - 2, 7, 1, 5, hb) + px(ri + 1, 7, 1, 5, hb) + px(fx, 13, 1, 1, hb) + px(fx + fw - 1, 13, 1, 1, hb);
-  } else if (o.hair === 'down') {
-    if (o.sex === 'f') {
-      k += px(li, 3, fw + 2, 3, hb) + px(li, 5, 1, 13, hb) + px(ri, 5, 1, 13, hb)
-        + px(li - 1, 6, 1, 9, hb) + px(ri + 1, 6, 1, 9, hb) + px(fx, 14, 3, 3, hb) + px(fc + 1, 14, 3, 3, hb);
-    } else {
-      k += px(fx, 3, fw, 3, hb) + px(li, 5, 1, 7, hb) + px(ri, 5, 1, 7, hb);
-    }
+  } else if (o.hair === 'down' && o.sex === 'f') {
+    // 여성 긴머리
+    k += px(li, 3, fw + 2, 3, hb) + px(li, 5, 1, 13, hb) + px(ri, 5, 1, 13, hb)
+      + px(li - 1, 6, 1, 9, hb) + px(ri + 1, 6, 1, 9, hb) + px(fx, 14, 3, 3, hb) + px(fc + 1, 14, 3, 3, hb);
   } else {
-    k += px(fx + 1, 2, fw - 2, 1, hb) + px(fx, 3, fw, 2, hb) + px(li, 5, 1, 3, hb) + px(ri, 5, 1, 3, hb);
+    // 'up'(남성 단정한 머리) — 이마 살짝 보임. (남성 '내림' 스타일은 폐기)
+    k += px(fx, 3, fw, 3, hb) + px(li, 5, 1, 7, hb) + px(ri, 5, 1, 7, hb);
   }
   k += px(fx, 5, fw, faceH, SK) + px(fx + 1, 5 + faceH, fw - 2, 1, SK);
   if (!femaleSide) k += px(fx - 1, 9, 1, 2, SK) + px(fx + fw, 9, 1, 2, SK);
-  if (o.hair !== 'up') k += px(fx, 4, fw, 1, hb) + px(fx, 5, fw, 1, hb) + px(fx + 1, 4, fw - 2, 1, hh);
-  else k += px(fx + 1, 5, fw - 2, 1, hb) + px(fx + 1, 2, fw - 3, 1, hh);
+  k += px(fx, 4, fw, 1, hb) + px(fx, 5, fw, 1, hb) + px(fx + 1, 4, fw - 2, 1, hh);
   k += px(fc - 1, 11, 1, 1, SKS) + px(fc - 2, 12, 4, 1, o.sex === 'f' ? LIP : MOUTH);
   if (o.glasses) {
     k += px(6, 8, 4, 1, FRAME) + px(6, 11, 4, 1, FRAME) + px(6, 9, 1, 2, FRAME) + px(9, 9, 1, 2, FRAME)

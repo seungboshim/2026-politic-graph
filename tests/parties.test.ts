@@ -2,8 +2,8 @@ import { describe, expect, test } from 'vitest';
 import { PARTY_COLORS, partyColor, shade } from '@/lib/parties';
 
 describe('parties', () => {
-  test('9개 정당 등록', () => {
-    expect(Object.keys(PARTY_COLORS).length).toBe(9);
+  test('10개 정당 등록', () => {
+    expect(Object.keys(PARTY_COLORS).length).toBe(10);
     expect(PARTY_COLORS['더불어민주당']).toBe('#003B96');
     expect(PARTY_COLORS['국민의힘']).toBe('#E61E2B');
   });
