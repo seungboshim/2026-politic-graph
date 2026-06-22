@@ -36,15 +36,6 @@ export const PHASE1: Question[] = [
     ],
   },
   {
-    id: 'q4', phase: 1, text: '명절에 친척 어른이 "요즘 세상은 전통과 기강이 무너져 너무 개방적이고 문란하다"고 하신다면 당신의 생각은?',
-    options: [
-      { label: '적극 공감한다. 무분별한 개방으로 사회 질서와 전통 가치가 파괴되고 있다.', axes: { social: 40 } },
-      { label: '어느 정도 일리 있는 말씀이라 생각하며 경청한다.', axes: { social: 15 } },
-      { label: '요즘 시대 변화를 받아들이지 못하는 낡은 꼰대 마인드라고 생각한다.', axes: { social: -20 } },
-      { label: '가부장적 전통이야말로 구시대적 악습이므로 완전히 타파해야 한다고 본다.', axes: { social: -40 } },
-    ],
-  },
-  {
     id: 'q5', phase: 1, text: '현시점 북한 정권은 대화와 협력의 대상이라기보다, 강력한 억제력을 동원해야 할 주적입니까?',
     options: [
       { label: '매우 동의 (대북 강경)', axes: { security: 40 } },
@@ -85,12 +76,12 @@ export const PHASE1: Question[] = [
   {
     id: 'q9', phase: 1, text: '만약 내일 바로 선거가 치러진다면, 당신의 정치적 지향과 가장 가까운 세력은 어디입니까?',
     options: [
-      { label: '이재명 정부의 국정 성공과 민주당의 전면 개혁 세력', routeBonus: -30, axes: { engage: 10 } },
-      { label: '조국혁신당, 진보당 등 선명한 야권 및 진보 독자 노선', routeBonus: -30, axes: { econ: -15 } },
-      { label: '법치와 보수 재건을 내세우는 제도권 보수 세력 (국민의힘·한동훈계)', routeBonus: 30, axes: { engage: 10 } },
-      { label: '이준석 중심의 철저한 능력주의와 실용을 추구하는 개혁신당', routeBonus: 15, axes: { gender: 15 } },
-      { label: '부정선거 진상규명과 광장 시위를 주도하는 강성 애국우파 세력', routeBonus: 30, axes: { social: 20, trust: -15 } },
-      { label: '양당의 기득권 정쟁에 반대하며 지지하는 당이 없다.', routeBonus: 0, axes: { trust: -20 } },
+      { label: '이재명 정부의 성공과 강력한 개혁 드라이브를 지지하는 세력', routeBonus: -30, axes: { engage: 10 } },
+      { label: '검찰개혁·기후·노동 등 선명한 진보 독자 노선 세력', routeBonus: -30, axes: { econ: -15 } },
+      { label: '능력주의와 실용을 앞세운 청년 중심 개혁 세력', routeBonus: 15, axes: { gender: 15 } },
+      { label: '법치와 보수 재건을 내세우는 합리적 개혁보수 세력', routeBonus: 30, axes: { engage: 10 } },
+      { label: '부정선거 진상규명과 광장 투쟁을 주도하는 강성 애국우파 세력', routeBonus: 30, axes: { social: 20, trust: -15 } },
+      { label: '양당 기득권 정쟁에 질려 지지하는 세력이 없다', routeBonus: 0, axes: { trust: -20 } },
     ],
   },
 ];

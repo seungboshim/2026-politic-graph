@@ -72,8 +72,8 @@ describe('QUESTIONS 데이터 검증', () => {
     expect(new Set(ALL_QUESTIONS.map((q) => q.id)).size).toBe(ALL_QUESTIONS.length);
   });
 
-  test('Phase1은 9문항, 라우터 질문 포함', () => {
-    expect(PHASE1.length).toBe(9);
+  test('Phase1은 8문항, 라우터 질문 포함', () => {
+    expect(PHASE1.length).toBe(8);
     expect(PHASE1.some((q) => q.options.some((o) => o.routeBonus !== undefined))).toBe(true);
   });
 
