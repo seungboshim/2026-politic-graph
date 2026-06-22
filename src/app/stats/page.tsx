@@ -5,6 +5,13 @@ import { results } from '@/db/schema';
 import { TYPE_MAP } from '@/data/types';
 import { POLITICIAN_MAP } from '@/data/politicians';
 import SectionHeading from '@/components/ui/SectionHeading';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '전체 통계',
+  description: '정치성향 테스트 참여자들의 유형 분포와 가장 많이 매칭된 정치인 통계를 확인하세요.',
+  alternates: { canonical: '/stats' },
+};
 
 export const revalidate = 60;
 

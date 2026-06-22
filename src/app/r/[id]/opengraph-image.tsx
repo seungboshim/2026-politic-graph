@@ -1,5 +1,6 @@
 // src/app/r/[id]/opengraph-image.tsx
 import { ImageResponse } from 'next/og';
+import { readFile } from 'node:fs/promises';
 import { getResult } from '@/app/actions';
 import { TYPE_MAP } from '@/data/types';
 import { leanOf } from '@/lib/spectrum';
@@ -11,7 +12,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   const { id } = await params;
   const r = await getResult(id);
   const type = r ? TYPE_MAP[r.typeId] : undefined;
-  const font = await fetch(new URL('./Pretendard-Bold.otf', import.meta.url)).then((res) => res.arrayBuffer());
+  const font = await readFile(new URL('../../Pretendard-Bold.otf', import.meta.url));
 
   const lean = r ? leanOf(r.state) : 0;
   const color = lean <= -30 ? '#6aa3ff' : lean >= 30 ? '#ff7b82' : '#b794f6';

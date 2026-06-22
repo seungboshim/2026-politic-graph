@@ -13,9 +13,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const r = await getResult(id);
   const name = r ? TYPE_MAP[r.typeId]?.name : undefined;
+  const title = name ? `나의 정치 유형은 "${name}"` : '나의 정치 유형 결과';
+  const description = name
+    ? `나의 정치 유형은 "${name}". 나와 가장 가까운 정치인은 누구일까? 18문항 내외로 알아보는 정치성향 테스트.`
+    : '18문항 내외로 알아보는 나의 정치 유형과 가장 가까운 정치인.';
   return {
-    title: name ? `나는 "${name}" | 정치성향 테스트` : '정치성향 테스트',
-    description: '18문항 내외로 알아보는 나의 정치 유형과 가장 가까운 정치인',
+    title,
+    description,
+    // 개인별 결과 페이지는 색인 제외(공유 OG 카드는 그대로 동작).
+    robots: { index: false, follow: true },
+    openGraph: { type: 'website', title: `${title} | 정치성향 테스트`, description, url: `/r/${id}` },
+    twitter: { card: 'summary_large_image', title: `${title} | 정치성향 테스트`, description },
   };
 }
 
