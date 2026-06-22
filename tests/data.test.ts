@@ -6,9 +6,9 @@ import { POLITICIANS } from '@/data/politicians';
 import { ALL_QUESTIONS, PHASE1, PHASE3_POOL } from '@/data/questions';
 
 describe('TYPES 데이터 검증', () => {
-  test('13개 유형, id 유일', () => {
-    expect(TYPES.length).toBe(13);
-    expect(new Set(TYPES.map((t) => t.id)).size).toBe(13);
+  test('12개 유형, id 유일', () => {
+    expect(TYPES.length).toBe(12);
+    expect(new Set(TYPES.map((t) => t.id)).size).toBe(12);
   });
 
   test('모든 축 값이 -100~100, 모든 축 존재', () => {
@@ -40,9 +40,9 @@ describe('TYPES 데이터 검증', () => {
 });
 
 describe('POLITICIANS 데이터 검증', () => {
-  test('25명, id 유일', () => {
-    expect(POLITICIANS.length).toBe(25);
-    expect(new Set(POLITICIANS.map((p) => p.id)).size).toBe(25);
+  test('13명, id 유일', () => {
+    expect(POLITICIANS.length).toBe(13);
+    expect(new Set(POLITICIANS.map((p) => p.id)).size).toBe(13);
   });
 
   test('정치인은 모든 스탠스를 가진다', () => {
