@@ -1,14 +1,10 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "BookkGothic";
-  src: url("/fonts/BookkGothic_Light.ttf") format("truetype");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "BookkGothic";
-  src: url("/fonts/BookkGothic_Bold.ttf") format("truetype");
-  font-weight: 700; font-style: normal; font-display: swap;
+/* 폰트는 next/font/local(layout.tsx)이 self-host·preload·메트릭보정 폴백까지 처리.
+   var(--font-bookk)를 참조하므로 inline 블록으로 둔다. */
+@theme inline {
+  --font-sans: var(--font-bookk), "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
 @theme {
@@ -31,9 +27,6 @@
   --color-spectrum-blue-text: #6aa3ff;
   --color-spectrum-violet-text: #b794f6;
   --color-spectrum-red-text: #ff7b82;
-
-  --font-sans: "BookkGothic", ui-monospace, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --text-display01: 2rem;
   --text-display02: 1.5rem;
