@@ -71,7 +71,7 @@ export const TYPES: PoliticalType[] = [
     tagline: '탄핵은 부당했으나, 싸움은 제도권 안에서',
     description: '과거 탄핵의 부당성을 가슴에 묻고, 현재 국민의힘을 중심으로 강력한 대여 투쟁을 전개해야 한다고 봅니다. 장외 부정선거론에는 거리를 두지만, 최근 선관위 사태 같은 제도적 부실에는 분노하며 당의 전면 쇄신과 확실한 보수 주도권을 원합니다.',
     keywords: ['#국민의힘', '#정통보수', '#대여투쟁'],
-    vector: { axes: { econ: 60, social: 55, security: 75, trust: 15, gender: 40, engage: 85 }, impeach: 'antiMild', fraud: 45 },
+    vector: { axes: { econ: 60, social: 55, security: 75, trust: 15, gender: 40, engage: 85 }, impeach: 'antiMild', fraud: 65 },
     weights: { impeach: 2.5, trust: 1.5 },
   },
   {
