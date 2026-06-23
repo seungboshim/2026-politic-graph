@@ -75,9 +75,22 @@ export function estimateTotal(answers: Answer[]): number {
   return computeRoute(answers) === 'apathy' ? 12 : 18;
 }
 
+// 진영 스코핑: 라우팅된 진영의 후보 유형 중에서만 최종 유형을 고른다.
+// 전역 매칭 시 강성 우파가 무당층(cynic)으로, 온건 좌파가 NL로 새는 문제를 막는다.
+// cynic/apathy(스탠스 차원 없음)는 center/apathy 진영에서만 후보가 된다.
+export const BRANCH_TYPES: Record<Branch, string[]> = {
+  left: ['nl-jusa', 'pd-labor', 'hard-leejm', 'prosec-reform', 'moderate-lib'],
+  right: ['young-merit', 'prag-con', 'pro-impeach-con', 'anti-impeach-main', 'plaza-right'],
+  center: ['moderate-lib', 'prag-con', 'young-merit', 'cynic'],
+  apathy: ['apathy'],
+};
+
 export function computeResult(answers: Answer[]): TestResult {
   const state = replay(answers); // 존재하지 않는 질문이면 여기서 throw
-  const type = matchType(state, TYPES);
+  const route = computeRoute(answers);
+  const ids = new Set(BRANCH_TYPES[route]);
+  const candidates = TYPES.filter((t) => ids.has(t.id));
+  const type = matchType(state, candidates);
   const top = matchPoliticians(state, POLITICIANS, 3);
   return { typeId: type.id, state, top };
 }
