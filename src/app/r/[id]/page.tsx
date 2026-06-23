@@ -6,6 +6,7 @@ import { getResult } from '@/app/actions';
 import { TYPE_MAP } from '@/data/types';
 import ResultView from '@/components/ResultView';
 import Comments from '@/components/Comments';
+import ShareButton from '@/components/ShareButton';
 
 interface Props { params: Promise<{ id: string }> }
 
@@ -35,9 +36,12 @@ export default async function ResultPage({ params }: Props) {
   return (
     <main className="mx-auto max-w-[560px] px-4 py-12">
       <ResultView typeId={r.typeId} state={r.state} top={r.top} samePct={r.samePct} />
-      <div className="mt-10 flex justify-center gap-3">
-        <Link href="/test" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">나도 테스트하기</Link>
-        <Link href="/stats" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">전체 통계 보기</Link>
+      <div className="mt-10 flex flex-col items-center gap-3">
+        <ShareButton typeName={TYPE_MAP[r.typeId]?.name} />
+        <div className="flex justify-center gap-3">
+          <Link href="/" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">나도 테스트하기</Link>
+          <Link href="/stats" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">전체 통계 보기</Link>
+        </div>
       </div>
       <Comments />
     </main>
