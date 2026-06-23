@@ -149,8 +149,9 @@ export const LEFT: Question[] = [
 export const RIGHT_GATE: Question = {
   id: 'r1', phase: 2, branch: 'right', text: '과거 보수 집권기 시절 감행된 윤석열 전 대통령 탄핵 사건에 대해 지금 어떻게 평가하십니까?',
   options: [
-    { label: '법치주의와 헌정 질서를 지키기 위한 정당하고 불가피한 선택이었다.', impeach: 'pro', axes: { trust: 25 } },
-    { label: '과정이 매끄럽지 못했으나 헌법재판소의 결정을 존중하고 미래로 나아가야 한다.', impeach: 'antiMild', axes: { trust: 10 } },
+    { label: '법치와 헌정 질서를 지키기 위한 정당하고 불가피한 선택이었다.', impeach: 'pro', axes: { trust: 25 } },
+    { label: '적극 옹호까진 아니어도, 헌법재판소의 결정을 존중·수용하고 미래로 나아가야 한다.', impeach: 'pro', axes: { trust: 10 } },
+    { label: '탄핵 자체는 무리였다고 보지만, 결정이 난 이상 제도권 안에서 싸워야 한다.', impeach: 'antiMild', axes: { trust: 0 } },
     { label: '거짓 선동과 배신으로 얼룩진 원천 무효의 정치 탄핵이었다.', impeach: 'yoonAgain', axes: { trust: -35 } },
   ],
 };

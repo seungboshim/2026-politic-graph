@@ -33,7 +33,7 @@ describe('getNextQuestion', () => {
   test('우향 → r1이 첫 Phase2 질문, 반탄이면 r2(부정선거)로', () => {
     const a = phase1Answers(RIGHT_P1);
     expect(getNextQuestion(a)!.id).toBe('r1');
-    a.push({ questionId: 'r1', optionIndex: 1 }); // antiMild
+    a.push({ questionId: 'r1', optionIndex: 2 }); // antiMild(부당·반탄) → rightAnti
     expect(getNextQuestion(a)!.id).toBe('r2');
   });
 
