@@ -5,6 +5,8 @@ import { results } from '@/db/schema';
 import { TYPE_MAP } from '@/data/types';
 import { POLITICIAN_MAP } from '@/data/politicians';
 import SectionHeading from '@/components/ui/SectionHeading';
+import AdUnit from '@/components/ads/AdUnit';
+import { AD_SLOTS } from '@/lib/ads';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -68,8 +70,9 @@ export default async function StatsPage() {
           </section>
         </>
       )}
+      <AdUnit slot={AD_SLOTS.stats} />
       <div className="mt-10 text-center">
-        <Link href="/test" className="inline-block rounded-xl px-6 py-3 font-bold text-background" style={{ backgroundImage: 'linear-gradient(92deg,#2f6fe6,#8b5cf6,#e8434b)' }}>나도 테스트하기</Link>
+        <Link href="/" className="inline-block rounded-xl px-6 py-3 font-bold text-background" style={{ backgroundImage: 'linear-gradient(92deg,#2f6fe6,#8b5cf6,#e8434b)' }}>나도 테스트하기</Link>
       </div>
     </main>
   );

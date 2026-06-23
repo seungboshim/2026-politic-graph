@@ -7,6 +7,8 @@ import { TYPE_MAP } from '@/data/types';
 import ResultView from '@/components/ResultView';
 import Comments from '@/components/Comments';
 import ShareButton from '@/components/ShareButton';
+import AdUnit from '@/components/ads/AdUnit';
+import { AD_SLOTS } from '@/lib/ads';
 
 interface Props { params: Promise<{ id: string }> }
 
@@ -43,6 +45,7 @@ export default async function ResultPage({ params }: Props) {
           <Link href="/stats" className="rounded-xl border border-border-strong bg-surface-raised px-5 py-3 text-body02 text-foreground-secondary">전체 통계 보기</Link>
         </div>
       </div>
+      <AdUnit slot={AD_SLOTS.result} />
       <Comments />
     </main>
   );

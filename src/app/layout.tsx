@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Link from "next/link";
 import "./globals.css";
 import AvatarDefs from "@/components/ui/AvatarDefs";
 import AppHeader from "@/components/ui/AppHeader";
+import AdsenseScript from "@/components/ads/AdsenseScript";
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_KEYWORDS } from "@/lib/site";
 
 // 자동 self-host + preload + 메트릭 보정 폴백으로 웹폰트 로드에 의한 레이아웃 시프트(CLS) 제거.
@@ -69,9 +71,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ko" className={`${bookk.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <AdsenseScript />
         <AvatarDefs />
         <AppHeader />
         {children}
+        <footer className="mt-auto border-t border-border px-4 py-6 text-center">
+          <Link href="/privacy" className="font-mono text-label01 text-foreground-faint hover:text-foreground-subtle">개인정보처리방침</Link>
+        </footer>
       </body>
     </html>
   );
