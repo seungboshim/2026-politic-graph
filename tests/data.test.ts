@@ -40,9 +40,9 @@ describe('TYPES 데이터 검증', () => {
 });
 
 describe('POLITICIANS 데이터 검증', () => {
-  test('13명, id 유일', () => {
-    expect(POLITICIANS.length).toBe(13);
-    expect(new Set(POLITICIANS.map((p) => p.id)).size).toBe(13);
+  test('17명, id 유일', () => {
+    expect(POLITICIANS.length).toBe(17);
+    expect(new Set(POLITICIANS.map((p) => p.id)).size).toBe(17);
   });
 
   test('정치인은 모든 스탠스를 가진다', () => {
