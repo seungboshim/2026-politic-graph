@@ -50,7 +50,7 @@ describe('getNextQuestion', () => {
     expect(getNextQuestion(a)).toBeNull();
   });
 
-  test('좌향 완주: phase2 6문항 + phase3 3문항 후 종료', () => {
+  test('좌향 완주: phase2 6문항 + phase3 0~3(적응형) 후 종료', () => {
     const a = phase1Answers(LEFT_P1);
     let q;
     const seen: string[] = [];
@@ -59,20 +59,23 @@ describe('getNextQuestion', () => {
       a.push({ questionId: q.id, optionIndex: 0 });
     }
     expect(seen.filter((id) => QUESTION_MAP[id].phase === 2).length).toBe(6);
-    expect(seen.filter((id) => QUESTION_MAP[id].phase === 3).length).toBe(3);
+    const p3 = seen.filter((id) => QUESTION_MAP[id].phase === 3).length;
+    expect(p3).toBeGreaterThanOrEqual(0);
+    expect(p3).toBeLessThanOrEqual(3);
   });
 
-  test('Phase3 선택은 답변이 추가돼도 고정 (안정성)', () => {
+  test('완주: 같은 질문 반복 없이 종료', () => {
     const a = phase1Answers(LEFT_P1);
     let q;
-    while ((q = getNextQuestion(a)) && QUESTION_MAP[q.id].phase !== 3) {
+    const seen = new Set<string>();
+    let guard = 0;
+    while ((q = getNextQuestion(a))) {
+      expect(seen.has(q.id), `중복 질문: ${q.id}`).toBe(false); // 같은 질문 반복 없음
+      seen.add(q.id);
       a.push({ questionId: q.id, optionIndex: 0 });
+      if (++guard > 30) break;
     }
-    const firstPick = q!.id;
-    a.push({ questionId: q!.id, optionIndex: 4 }); // 극단적으로 답해도
-    const next = getNextQuestion(a)!;
-    expect(next.id).not.toBe(firstPick); // 같은 질문 반복 없음
-    expect(QUESTION_MAP[next.id].phase).toBe(3);
+    expect(guard).toBeLessThan(30); // 무한루프 없이 종료
   });
 });
 
