@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   keywords: SITE_KEYWORDS,
   applicationName: SITE_NAME,
   category: "정치",
-  verification: { google: "WfurLEx8DMdzVIYgL3WkE3MKDHxfGOjPt4eajUNV7OU" },
+  verification: { google: "zpLwSxWWbNl8T_Oe15huRieqZ0Cs03dk7WzD9soxelk" },
   alternates: { canonical: "/" },
   robots: {
     index: true,
